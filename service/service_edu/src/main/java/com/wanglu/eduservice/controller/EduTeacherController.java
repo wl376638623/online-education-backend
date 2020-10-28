@@ -7,6 +7,7 @@ import com.wanglu.eduservice.entity.vo.TeacherQuery;
 import com.wanglu.eduservice.service.EduTeacherService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wanglu.servicebase.exceptionhandler.GuliException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -65,6 +66,11 @@ public class EduTeacherController {
     public R pageListTeacher(@PathVariable Long current,
                              @PathVariable Long limit) {
         Page<EduTeacher> pageTeacher = new Page<>(current,limit);
+        try {
+            int i = 10 / 0;
+        } catch (Exception e) {
+            throw new GuliException(20001, "执行了自定义异常处理");
+        }
         //调用方法实现分页
         teacherService.page(pageTeacher,null);
         long total = pageTeacher.getTotal();//总记录数
