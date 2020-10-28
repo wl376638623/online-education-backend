@@ -36,6 +36,7 @@ public class EduTeacherController {
 
     //1 查询讲师表所有数据
     //rest风格
+    @ApiOperation(value = "查询所有讲师")
     @GetMapping("findAll")
     public List<EduTeacher> findAllTeacher(){
         //调用service方法
@@ -43,9 +44,10 @@ public class EduTeacherController {
         return list;
     }
 
-    //2 逻辑删除讲师的方法
+    //2 逻辑删除讲师的方
+    @ApiOperation(value = "逻辑删除讲师")
     @DeleteMapping("{id}")
-    public boolean removeTeacher(@PathVariable String id){
+    public boolean removeTeacher(@ApiParam(name = "id",value = "讲师ID",required = true)@PathVariable String id){
         boolean flag = teacherService.removeById(id);
         return flag;
     }
