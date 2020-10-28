@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -38,43 +40,38 @@ public class EduTeacherController {
     //rest风格
     @ApiOperation(value = "查询所有讲师")
     @GetMapping("findAll")
-    public List<EduTeacher> findAllTeacher(){
+    public R findAllTeacher(){
         //调用service方法
         List<EduTeacher> list = teacherService.list(null);
-        return list;
+        return R.ok().data("items",list);
     }
 
     //2 逻辑删除讲师的方
     @ApiOperation(value = "逻辑删除讲师")
     @DeleteMapping("{id}")
-    public boolean removeTeacher(@ApiParam(name = "id",value = "讲师ID",required = true)@PathVariable String id){
+    public R removeTeacher(@ApiParam(name = "id",value = "讲师ID",required = true)@PathVariable String id){
         boolean flag = teacherService.removeById(id);
-        return flag;
+        if (flag) {
+            return R.ok();
+        } else {
+            return R.error();
+        }
     }
 
     //3 分页查询讲师的方法
     //current 当前页
     //limit 每页记录数
     @GetMapping("pageTeacher/{current}/{limit}")
-    public R pageListTeacher(@PathVariable long current,
-                             @PathVariable long limit) {
-        //创建page对象
+    public R pageListTeacher(@PathVariable Long current,
+                             @PathVariable Long limit) {
         Page<EduTeacher> pageTeacher = new Page<>(current,limit);
-
-        int i = 10/0;
-
         //调用方法实现分页
-        //调用方法时候，底层封装，把分页所有数据封装到pageTeacher对象里面
         teacherService.page(pageTeacher,null);
-
         long total = pageTeacher.getTotal();//总记录数
-        List<EduTeacher> records = pageTeacher.getRecords(); //数据list集合
-
-//        Map map = new HashMap();
-//        map.put("total",total);
-//        map.put("rows",records);
-//        return R.ok().data(map);
-
+        List<EduTeacher> records = pageTeacher.getRecords();//数据list集合
+//        Map map = new HashMap<>();
+//        map.put("total", total);
+//        map.put("records", records);
         return R.ok().data("total",total).data("rows",records);
     }
 
