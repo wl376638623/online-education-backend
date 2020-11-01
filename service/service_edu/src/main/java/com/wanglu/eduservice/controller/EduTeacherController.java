@@ -30,6 +30,7 @@ import java.util.Map;
 @Api(description="讲师管理")
 @RestController
 @RequestMapping("/eduservice/teacher")
+@CrossOrigin
 public class EduTeacherController {
 
     //访问地址： http://localhost:8001/eduservice/teacher/findAll
@@ -108,6 +109,8 @@ public class EduTeacherController {
        if (!StringUtils.isEmpty(end)) {
            wrapper.le("gmt_modified", end);
        }
+       //排序
+       wrapper.orderByDesc("gmt_create");
        //调用方法实现条件查询
        teacherService.page(pageTeacher, wrapper);
        List<EduTeacher> records = pageTeacher.getRecords();//数据list
