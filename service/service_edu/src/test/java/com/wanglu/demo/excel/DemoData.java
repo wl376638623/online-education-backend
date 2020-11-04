@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @Data
 public class DemoData {
     //设置excel表头名称
-    @ExcelProperty("学生编号")
+    @ExcelProperty(value = "学生编号",index = 0)
     private Integer sno;
 
-    @ExcelProperty("学生姓名")
+    @ExcelProperty(value = "学生姓名",index = 1)
     private String sname;
 }

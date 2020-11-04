@@ -10,9 +10,11 @@ public class TestEasyExcel {
     public static void main(String[] args) {
         //实现excel写的操作
         //1.设置写入文件夹地址和文件名称
-        String filename = "D:\\write.xlsx";
-        //2调用EasyExcel
-        EasyExcel.write(filename, DemoData.class).sheet("学生列表").doWrite(getData());
+         String filename = "D:\\write.xlsx";
+//        //2调用EasyExcel
+//        EasyExcel.write(filename, DemoData.class).sheet("学生列表").doWrite(getData());
+        //实现excel的读取
+        EasyExcel.read(filename, DemoData.class, new ExcelListener()).sheet().doRead();
 
     }
     private static List<DemoData> getData(){
