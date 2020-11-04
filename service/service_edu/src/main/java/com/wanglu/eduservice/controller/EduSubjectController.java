@@ -2,12 +2,15 @@ package com.wanglu.eduservice.controller;
 
 
 import com.wanglu.commonutils.R;
+import com.wanglu.eduservice.entity.subject.OneSubject;
 import com.wanglu.eduservice.service.EduSubjectService;
 import com.wanglu.eduservice.service.impl.EduSubjectServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * <p>
@@ -35,8 +38,8 @@ public class EduSubjectController {
     //课程分类列表（树形）
     @GetMapping("getAllSubject")
     public R getAllSubject() {
-
-        return R.ok();
+        List<OneSubject> list =  eduSubjectService.getAllOneTwoSubject();
+        return R.ok().data("list",list);
     }
 }
 
