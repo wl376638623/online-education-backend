@@ -5,11 +5,8 @@ import com.wanglu.commonutils.R;
 import com.wanglu.eduservice.service.EduSubjectService;
 import com.wanglu.eduservice.service.impl.EduSubjectServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -32,6 +29,13 @@ public class EduSubjectController {
     @PostMapping("addSubject")
     public R addSubject(MultipartFile file) {
         eduSubjectService.saveSubject(file,eduSubjectService);
+        return R.ok();
+    }
+
+    //课程分类列表（树形）
+    @GetMapping("getAllSubject")
+    public R getAllSubject() {
+
         return R.ok();
     }
 }
