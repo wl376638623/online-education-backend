@@ -1,9 +1,13 @@
 package com.wanglu.eduservice.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.wanglu.commonutils.R;
+import com.wanglu.eduservice.entity.chapter.ChapterVo;
+import com.wanglu.eduservice.service.EduChapterService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 /**
  * <p>
@@ -15,7 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/eduservice/edu-chapter")
+@CrossOrigin
 public class EduChapterController {
+    @Autowired
+    private EduChapterService chapterService;
 
+    //返回课程大纲的方法,根据课程ID进行查询
+    @GetMapping("getChapterVideo/{courseId}")
+    public R getChapterVideo(@PathVariable String courseId) {
+        List<ChapterVo> list= chapterService.getCharpterVideoByCourseId(courseId);
+        return R.ok().data("allChapterVide",list);
+    }
 }
 
