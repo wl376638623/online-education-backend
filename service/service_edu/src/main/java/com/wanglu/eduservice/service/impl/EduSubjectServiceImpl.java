@@ -5,10 +5,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wanglu.eduservice.entity.EduSubject;
 import com.wanglu.eduservice.entity.excel.SubjectData;
 import com.wanglu.eduservice.entity.subject.OneSubject;
+import com.wanglu.eduservice.entity.subject.TwoSubject;
 import com.wanglu.eduservice.listener.SubjectExcelListener;
 import com.wanglu.eduservice.mapper.EduSubjectMapper;
 import com.wanglu.eduservice.service.EduSubjectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -59,12 +61,30 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
             //多个OneSubject放到finalSubjectList里面
             EduSubject eduSubject = oneSubjectList.get(i);
             OneSubject oneSubject = new OneSubject();
-            oneSubject.setId(eduSubject.getId());
-            oneSubject.setTitle(eduSubject.getTitle());
+//            oneSubject.setId(eduSubject.getId());
+//            oneSubject.setTitle(eduSubject.getTitle());
+            //把eduSubject的值复制到对应的oneSubject对象里面
+            BeanUtils.copyProperties(eduSubject,oneSubject);
             finalSubjectList.add(oneSubject);
+            //在一级分类的循环遍历查询所有二级分类
+            List<TwoSubject> twoFinalSubjectList = new ArrayList<>();
+            //遍历二级分类list集合
+            for (int m = 0; m < twoSubjectList.size(); m++) {
+                //或者每个二级分类
+                EduSubject tSubject = twoSubjectList.get(m);
+                //判断二级分类parentid和一级的id是否一样
+                if (tSubject.getParentId().equals(eduSubject.getId())) {
+                    //把twoSubject值复制到
+                    TwoSubject twoSubject = new TwoSubject();
+                    BeanUtils.copyProperties(tSubject, twoSubject);
+                    twoFinalSubjectList.add(twoSubject);
+                }
+            }
+            //把一级下面所有的二级分类放到一级分类里面去
+            oneSubject.setChildren(twoFinalSubjectList);
         }
 
         //4.封装二级分类
-        return null;
+        return finalSubjectList;
     }
 }
