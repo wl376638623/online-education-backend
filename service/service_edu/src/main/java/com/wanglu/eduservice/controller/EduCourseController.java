@@ -35,5 +35,12 @@ public class EduCourseController {
         CourseInfoVo courseInfoVo = courseService.getCourseInfo(courseId);
         return R.ok().data("courseInfoVo",courseInfoVo);
     }
+
+    //修改课程信息
+    @PostMapping("updateCourseInfo")
+    public R updateCourseInfo(@RequestBody CourseInfoVo courseInfoVo) {
+        courseService.updateCourseInfo(courseInfoVo);
+        return R.ok();
+    }
 }
 
