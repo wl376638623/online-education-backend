@@ -45,4 +45,16 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         eduCourseDescriptionService.save(eduCourseDescription);
         return id;
     }
+
+    @Override
+    public CourseInfoVo getCourseInfo(String courseId) {
+        //查询课程表
+        EduCourse eduCourse = baseMapper.selectById(courseId);
+        //查询描述表
+        EduCourseDescription description = eduCourseDescriptionService.getById(courseId);
+        CourseInfoVo courseInfoVo = new CourseInfoVo();
+        BeanUtils.copyProperties(eduCourse, courseInfoVo);
+        courseInfoVo.setDescription(description.getDescription());
+        return courseInfoVo;
+    }
 }

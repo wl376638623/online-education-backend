@@ -1,6 +1,7 @@
 package com.wanglu.eduservice.controller;
 
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/eduservice/edu-video")
+@CrossOrigin
 public class EduVideoController {
 
 }

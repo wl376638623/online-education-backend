@@ -28,5 +28,12 @@ public class EduCourseController {
         String id = courseService.saveCourseInfo(courseInfoVo);
         return R.ok().data("courseId",id);
     }
+
+    //根据课程ID查询课程的基本信息
+    @GetMapping("getCourseInfo/{courseId}")
+    public R getCourseInfo(@PathVariable String courseId) {
+        CourseInfoVo courseInfoVo = courseService.getCourseInfo(courseId);
+        return R.ok().data("courseInfoVo",courseInfoVo);
+    }
 }
 

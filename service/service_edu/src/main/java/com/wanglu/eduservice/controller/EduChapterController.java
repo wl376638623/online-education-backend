@@ -18,7 +18,7 @@ import java.util.List;
  * @since 2020-11-05
  */
 @RestController
-@RequestMapping("/eduservice/edu-chapter")
+@RequestMapping("/eduservice/chapter")
 @CrossOrigin
 public class EduChapterController {
     @Autowired
@@ -28,7 +28,7 @@ public class EduChapterController {
     @GetMapping("getChapterVideo/{courseId}")
     public R getChapterVideo(@PathVariable String courseId) {
         List<ChapterVo> list= chapterService.getCharpterVideoByCourseId(courseId);
-        return R.ok().data("allChapterVide",list);
+        return R.ok().data("allChapterVideo",list);
     }
 }
 
