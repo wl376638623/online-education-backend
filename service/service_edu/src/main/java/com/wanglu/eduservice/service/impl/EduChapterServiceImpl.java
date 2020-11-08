@@ -9,6 +9,7 @@ import com.wanglu.eduservice.mapper.EduChapterMapper;
 import com.wanglu.eduservice.service.EduChapterService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wanglu.eduservice.service.EduVideoService;
+import com.wanglu.servicebase.exceptionhandler.GuliException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,5 +69,23 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
 
         }
         return finalList;
+    }
+    //删除章节的方法
+    @Override
+    public boolean deleteChapter(String chapterId) {
+        //根据章节id查询小节表 查询出数据 不删除
+        QueryWrapper<EduVideo> wrapper = new QueryWrapper<>();
+        wrapper.eq("chapter_id", chapterId);
+        int count = videoService.count(wrapper);
+        //判断
+        if (count > 0) {
+            //能查询出不进行删除
+            throw new GuliException(20001, "有小节数据不能删除");
+        } else {
+            //没查出数据进行删除
+            int result = baseMapper.deleteById(chapterId);
+            return result > 0;
+        }
+
     }
 }
