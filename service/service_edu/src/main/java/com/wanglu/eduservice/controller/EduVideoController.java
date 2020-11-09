@@ -36,6 +36,12 @@ public class EduVideoController {
         return R.ok();
     }
 
+    //按照Id查询小节
+    @GetMapping("getVideoInfo/{videoId}")
+    public R getVideoInfo(@PathVariable String videoId) {
+        EduVideo eduVideo = eduVideoService.getById(videoId);
+        return R.ok().data("video", eduVideo);
+    }
     //修改小节
     @PostMapping("updateVideo")
     public R updateVideo(@RequestBody EduVideo eduVideo) {

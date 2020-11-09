@@ -3,6 +3,7 @@ package com.wanglu.eduservice.controller;
 
 import com.wanglu.commonutils.R;
 import com.wanglu.eduservice.entity.vo.CourseInfoVo;
+import com.wanglu.eduservice.entity.vo.CoursePublishVo;
 import com.wanglu.eduservice.service.EduCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,13 @@ public class EduCourseController {
     public R updateCourseInfo(@RequestBody CourseInfoVo courseInfoVo) {
         courseService.updateCourseInfo(courseInfoVo);
         return R.ok();
+    }
+
+    //根据课程id查询课程确认信息
+    @GetMapping("getPublishCourseInfo/{id}")
+    public R getPublishCourseInfo(@PathVariable String id) {
+        CoursePublishVo courseInfoVo = courseService.publishCourseInfo(id);
+        return R.ok().data("publishCourse", courseInfoVo);
     }
 }
 

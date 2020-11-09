@@ -2,6 +2,7 @@ package com.wanglu.eduservice.mapper;
 
 import com.wanglu.eduservice.entity.EduCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.wanglu.eduservice.entity.vo.CoursePublishVo;
 
 /**
  * <p>
@@ -12,5 +13,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2020-11-05
  */
 public interface EduCourseMapper extends BaseMapper<EduCourse> {
+    public CoursePublishVo getPublishCourseInfo(String courseId);
 
 }

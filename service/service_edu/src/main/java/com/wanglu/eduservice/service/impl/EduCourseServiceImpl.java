@@ -3,6 +3,7 @@ package com.wanglu.eduservice.service.impl;
 import com.wanglu.eduservice.entity.EduCourse;
 import com.wanglu.eduservice.entity.EduCourseDescription;
 import com.wanglu.eduservice.entity.vo.CourseInfoVo;
+import com.wanglu.eduservice.entity.vo.CoursePublishVo;
 import com.wanglu.eduservice.mapper.EduCourseMapper;
 import com.wanglu.eduservice.service.EduCourseDescriptionService;
 import com.wanglu.eduservice.service.EduCourseService;
@@ -75,5 +76,11 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         if (!b) {
             throw new GuliException(20001,"修改课程描述失败");
         }
+    }
+
+    @Override
+    public CoursePublishVo publishCourseInfo(String id) {
+        //调用mapper
+        return baseMapper.getPublishCourseInfo(id);
     }
 }
