@@ -2,6 +2,7 @@ package com.wanglu.eduservice.controller;
 
 
 import com.wanglu.commonutils.R;
+import com.wanglu.eduservice.entity.EduCourse;
 import com.wanglu.eduservice.entity.vo.CourseInfoVo;
 import com.wanglu.eduservice.entity.vo.CoursePublishVo;
 import com.wanglu.eduservice.service.EduCourseService;
@@ -49,6 +50,17 @@ public class EduCourseController {
     public R getPublishCourseInfo(@PathVariable String id) {
         CoursePublishVo courseInfoVo = courseService.publishCourseInfo(id);
         return R.ok().data("publishCourse", courseInfoVo);
+    }
+
+    //课程最终发布
+    //修改课程状态
+    @PostMapping("publishCourse/{id}")
+    public R publishCourse(@PathVariable String id) {
+        EduCourse eduCourse = new EduCourse();
+        eduCourse.setId(id);
+        eduCourse.setStatus("Normal");
+        courseService.updateById(eduCourse);
+        return R.ok();
     }
 }
 
