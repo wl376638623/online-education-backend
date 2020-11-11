@@ -68,7 +68,6 @@ public class EduTeacherController {
                              @PathVariable Long limit) {
         Page<EduTeacher> pageTeacher = new Page<>(current,limit);
         try {
-            int i = 10 / 0;
         } catch (Exception e) {
             throw new GuliException(20001, "执行了自定义异常处理");
         }
