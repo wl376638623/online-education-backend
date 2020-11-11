@@ -8,8 +8,10 @@ import com.wanglu.eduservice.entity.EduCourse;
 import com.wanglu.eduservice.entity.EduTeacher;
 import com.wanglu.eduservice.entity.vo.CourseInfoVo;
 import com.wanglu.eduservice.entity.vo.CoursePublishVo;
+import com.wanglu.eduservice.entity.vo.CourseQuery;
 import com.wanglu.eduservice.entity.vo.TeacherQuery;
 import com.wanglu.eduservice.service.EduCourseService;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -41,30 +43,31 @@ public class EduCourseController {
     //4 条件查询带分页的方法
     @PostMapping("pageCourseCondition/{current}/{limit}")
     public R pageCourseCondition(@PathVariable long current,@PathVariable long limit,
-                                  @RequestBody(required = false) CoursePublishVo courseQuery){
+                                  @RequestBody(required = false) CourseQuery courseQuery){
+
         //创建一个page对象
-        Page<EduCourse> coursePage = new Page<>(current, limit);
+        Page<EduCourse> pageCourse = new Page<>(current, limit);
         //构造条件
         QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
         //wrapper多条件组合查询
         //判断条件值是否为空，如果不为空拼接
         String title = courseQuery.getTitle();
-        String teacherName = courseQuery.getTeacherName();
+        String status = courseQuery.getStatus();
+
         if (!StringUtils.isEmpty(title)) {
             //构建条件
             wrapper.like("title", title);
         }
-        if (!StringUtils.isEmpty(teacherName)) {
-            //构建条件
-            wrapper.like("title", title);
+        if (!StringUtils.isEmpty(status)) {
+            wrapper.eq("status", status);
         }
 
         //排序
         wrapper.orderByDesc("gmt_create");
         //调用方法实现条件查询
-        courseService.page(coursePage, wrapper);
-        List<EduCourse> records = coursePage.getRecords();//数据list
-        long total = coursePage.getTotal();//总记录数
+        courseService.page(pageCourse, wrapper);
+        List<EduCourse> records = pageCourse.getRecords();//数据list
+        long total = pageCourse.getTotal();//总记录数
         return R.ok().data("total", total).data("rows", records);
 
     }
@@ -106,6 +109,13 @@ public class EduCourseController {
         eduCourse.setId(id);
         eduCourse.setStatus("Normal");
         courseService.updateById(eduCourse);
+        return R.ok();
+    }
+
+    //删除课程
+    @DeleteMapping("{courseId}")
+    public R deleteCourse(@PathVariable String courseId) {
+        courseService.removeCourse(courseId);
         return R.ok();
     }
 }
