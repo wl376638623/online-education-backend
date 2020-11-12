@@ -7,6 +7,10 @@ import java.util.List;
 
 public class TestVod {
     public static void main(String[] args) throws Exception{
+
+    }
+
+    public static void getPalyAuth() throws Exception{
         //根绝视频id获取视频播放凭证
         //撞见一个初始化对象
         DefaultAcsClient client = InitObject.initVodClient("LTAI4FzmTRc2zNukBFTa6pT3", "tqojkrUOXvQ3UtXwKsnIt0pptUZlO4");
