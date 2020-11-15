@@ -24,8 +24,8 @@ public class EduVideoController {
 
     //添加小节
     @PostMapping("addVideo")
-    public R addVideo(@RequestBody EduVideo eduVideo) {
-        eduVideoService.save(eduVideo);
+    public R addVideo(@RequestBody EduVideo video) {
+        eduVideoService.save(video);
         return R.ok();
     }
 
@@ -39,8 +39,8 @@ public class EduVideoController {
     //按照Id查询小节
     @GetMapping("getVideoInfo/{videoId}")
     public R getVideoInfo(@PathVariable String videoId) {
-        EduVideo eduVideo = eduVideoService.getById(videoId);
-        return R.ok().data("video", eduVideo);
+        EduVideo video = eduVideoService.getById(videoId);
+        return R.ok().data("video", video);
     }
     //修改小节
     @PostMapping("updateVideo")

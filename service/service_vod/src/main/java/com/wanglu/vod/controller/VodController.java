@@ -17,6 +17,7 @@ public class VodController {
     @Autowired
     private VodService vodService;
 
+
     //上传视频到阿里云
     @PostMapping("uploadAlyiVideo")
     public R uploadAlyiVideo(MultipartFile file) {
