@@ -26,6 +26,7 @@ public class EduVideoController {
     @PostMapping("addVideo")
     public R addVideo(@RequestBody EduVideo video) {
         eduVideoService.save(video);
+        System.out.println(video);
         return R.ok();
     }
 
@@ -44,8 +45,8 @@ public class EduVideoController {
     }
     //修改小节
     @PostMapping("updateVideo")
-    public R updateVideo(@RequestBody EduVideo eduVideo) {
-        eduVideoService.updateById(eduVideo);
+    public R updateVideo(@RequestBody EduVideo video) {
+        eduVideoService.updateById(video);
         return R.ok();
     }
 }
