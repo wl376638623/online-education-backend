@@ -2,9 +2,11 @@ package com.wanglu.eduservice.controller;
 
 
 import com.wanglu.commonutils.R;
+import com.wanglu.eduservice.client.VodClient;
 import com.wanglu.eduservice.entity.EduVideo;
 import com.wanglu.eduservice.service.EduVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -22,6 +24,9 @@ public class EduVideoController {
     @Autowired
     private EduVideoService eduVideoService;
 
+    @Autowired
+    private VodClient vodClient;
+
     //添加小节
     @PostMapping("addVideo")
     public R addVideo(@RequestBody EduVideo video) {
@@ -33,6 +38,14 @@ public class EduVideoController {
     //删除小节 TODO 删除小节时候删除后面的视频
     @DeleteMapping("{id}")
     public R deleteVideo(@PathVariable String id) {
+        //根据小节id得到视频id
+        EduVideo eduVideo = eduVideoService.getById(id);
+        String videoSourceId = eduVideo.getVideoSourceId();
+        if (!StringUtils.isEmpty(videoSourceId)) {
+            //根据视频id 远程调用实现视频删除
+            vodClient.removeAlyVideo(videoSourceId);
+        }
+        //删除小节
         eduVideoService.removeById(id);
         return R.ok();
     }
