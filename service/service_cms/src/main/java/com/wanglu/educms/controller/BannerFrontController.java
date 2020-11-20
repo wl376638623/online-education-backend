@@ -1,8 +1,8 @@
 package com.wanglu.educms.controller;
 
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-11-21
  */
 @RestController
-@RequestMapping("/educms/crm-banner")
-public class CrmBannerController {
+@RequestMapping("/educms/bannerfront")
+@CrossOrigin
+public class BannerFrontController {
 
 }
 
