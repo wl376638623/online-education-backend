@@ -1,5 +1,6 @@
 package com.wanglu.educms.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wanglu.educms.entity.CrmBanner;
 import com.wanglu.educms.mapper.CrmBannerMapper;
 import com.wanglu.educms.service.CrmBannerService;
@@ -21,6 +22,11 @@ public class CrmBannerServiceImpl extends ServiceImpl<CrmBannerMapper, CrmBanner
 
     @Override
     public List<CrmBanner> selectAllBanner() {
+        //根据id进行降序排列 显示排列之后的前两条记录
+        QueryWrapper<CrmBanner> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("id");
+        //last方法 拼接sql语句
+        wrapper.last("limit 3");
         List<CrmBanner> list = baseMapper.selectList(null);
         return list;
     }
