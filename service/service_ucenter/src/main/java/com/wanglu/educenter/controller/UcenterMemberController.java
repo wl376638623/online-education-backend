@@ -1,12 +1,16 @@
 package com.wanglu.educenter.controller;
 
 
+import com.wanglu.commonutils.JwtUtils;
 import com.wanglu.commonutils.R;
 import com.wanglu.educenter.entity.UcenterMember;
 import com.wanglu.educenter.entity.vo.RegisterVo;
 import com.wanglu.educenter.service.UcenterMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.security.PublicKey;
 
 /**
  * <p>
@@ -30,7 +34,7 @@ public class UcenterMemberController {
         //调用service里面的方法实现登录
         //返回token值 jwt
         String token = memberService.login(member);
-        return R.ok().data("token",token);
+        return R.ok().data("token", token);
 
     }
 
@@ -39,6 +43,18 @@ public class UcenterMemberController {
     public R registerUser(@RequestBody RegisterVo registerVo) {
         memberService.register(registerVo);
         return R.ok();
+    }
+
+    //根据token获取用户信息
+    @GetMapping("getMemberInfo")
+    public R getMemberInfo(HttpServletRequest request) {
+        //调用jwt工具类里面的对象，根据request获取头信息,返回用户的信息
+        String memberId = JwtUtils.getMemberIdByJwtToken(request);
+        //查询数据根据用户id查询用户信息
+        UcenterMember member = memberService.getById(memberId);
+        //将返回的对象密码设置为空
+        member.setPassword(null);
+        return R.ok().data("userInfo", member);
     }
 }
 
