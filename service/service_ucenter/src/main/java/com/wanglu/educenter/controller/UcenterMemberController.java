@@ -24,7 +24,7 @@ public class UcenterMemberController {
     private UcenterMemberService memberService;
 
     //登录
-    @GetMapping("login")
+    @PostMapping("login")
     public R loginUser(@RequestBody UcenterMember member) {
         //调用service里面的方法实现登录
         //返回token值 jwt
