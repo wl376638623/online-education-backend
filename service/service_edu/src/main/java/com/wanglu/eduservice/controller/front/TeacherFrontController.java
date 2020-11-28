@@ -5,15 +5,13 @@ import com.wanglu.commonutils.R;
 import com.wanglu.eduservice.entity.EduTeacher;
 import com.wanglu.eduservice.service.EduTeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @RestController
 @RequestMapping("/eduservice/teacherfront")
+@CrossOrigin
 public class TeacherFrontController {
     @Autowired
     private EduTeacherService teacherService;
