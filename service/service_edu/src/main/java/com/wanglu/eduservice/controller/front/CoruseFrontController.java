@@ -19,6 +19,11 @@ import java.util.Map;
 public class CoruseFrontController {
     @Autowired
     private EduCourseService courseService;
-    //1条件查询带分页查询课程
 
+    //1条件查询带分页查询课程
+    @PostMapping("getFrontCourseList/{page}/{limit}")
+    public R getFrontCourseList(@PathVariable long page , @PathVariable long limit) {
+
+        return R.ok();
+    }
 }
