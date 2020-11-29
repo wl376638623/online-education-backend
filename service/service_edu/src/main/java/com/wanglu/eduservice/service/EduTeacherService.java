@@ -16,5 +16,6 @@ import java.util.Map;
  */
 public interface EduTeacherService extends IService<EduTeacher> {
 
+
     Map<String, Object> getTeacherFrontList(Page<EduTeacher> teacherPage);
 }
