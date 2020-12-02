@@ -75,4 +75,5 @@ public class TestVod {
         //Base信息
         System.out.print("VideoBase.Title = " + response.getVideoBase().getTitle() + "\n");
     }
+
 }

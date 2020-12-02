@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConstantVodUtils implements InitializingBean {
 
-    @Value("${aliyun.vod.file.keyid}")
+    @Value("LTAI4FzmTRc2zNukBFTa6pT3")
     private String keyid;
 
-    @Value("${aliyun.vod.file.keysecret}")
+    @Value("tqojkrUOXvQ3UtXwKsnIt0pptUZlO4")
     private String keysecret;
 
     public static String ACCESS_KEY_SECRET;

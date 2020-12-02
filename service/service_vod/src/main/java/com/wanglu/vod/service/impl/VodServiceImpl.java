@@ -70,4 +70,6 @@ public class VodServiceImpl implements VodService {
             throw new GuliException(20001, "删除视频失败");
         }
     }
+
+
 }

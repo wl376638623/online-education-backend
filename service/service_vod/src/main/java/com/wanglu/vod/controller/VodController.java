@@ -1,9 +1,8 @@
 package com.wanglu.vod.controller;
 
 import com.aliyuncs.DefaultAcsClient;
-import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
-import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthRequest;
-import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthResponse;
+import com.aliyuncs.exceptions.ClientException;
+import com.aliyuncs.vod.model.v20170321.*;
 import com.wanglu.commonutils.R;
 import com.wanglu.servicebase.exceptionhandler.GuliException;
 import com.wanglu.vod.Utils.ConstantVodUtils;
@@ -14,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+
+import static com.wanglu.vod.Utils.InitVodClient.initVodClient;
 
 @RestController
 @RequestMapping("/eduvod/video")
@@ -29,7 +30,7 @@ public class VodController {
     public R uploadAlyiVideo(MultipartFile file) {
         //返回上传视频id
         String videoId = vodService.uploadVideoAly(file);
-        return R.ok().data("videoId",videoId);
+        return R.ok().data("videoId", videoId);
     }
 
     //根据视频id删除视频
@@ -37,7 +38,7 @@ public class VodController {
     public R removeAlyVideo(@PathVariable String id) {
         try {
             //初始化对象
-            DefaultAcsClient client = InitVodClient.initVodClient(ConstantVodUtils.ACCESS_KEY_ID, ConstantVodUtils.ACCESS_KEY_SECRET);
+            DefaultAcsClient client = initVodClient(ConstantVodUtils.ACCESS_KEY_ID, ConstantVodUtils.ACCESS_KEY_SECRET);
             //创建一个删除视频的request对象
             DeleteVideoRequest request = new DeleteVideoRequest();
             //想request里面设置视频id
@@ -65,7 +66,7 @@ public class VodController {
     public R getPlayAuth(@PathVariable String id) {
         try {
             DefaultAcsClient client =
-                    InitVodClient.initVodClient(ConstantVodUtils.ACCESS_KEY_ID, ConstantVodUtils.ACCESS_KEY_SECRET);
+                    initVodClient(ConstantVodUtils.ACCESS_KEY_ID, ConstantVodUtils.ACCESS_KEY_SECRET);
             GetVideoPlayAuthRequest request = new GetVideoPlayAuthRequest();
             //向request里面设置视频id
             request.setVideoId(id);
@@ -77,5 +78,36 @@ public class VodController {
             throw new GuliException(20001, "获取凭证失败");
         }
     }
+
+    //获取视频播放地址
+    @GetMapping("getPlayInfo/{id}")
+    public R getPlayInfo(@PathVariable String id) {
+        String playInfoUrl = "";
+        DefaultAcsClient client = InitVodClient.initVodClient(ConstantVodUtils.ACCESS_KEY_ID, ConstantVodUtils.ACCESS_KEY_SECRET);
+
+        //创建获取视频地址request和response
+        GetPlayInfoRequest request = new GetPlayInfoRequest();
+        GetPlayInfoResponse response = new GetPlayInfoResponse();
+
+        //向request对象里面设置视频id
+        request.setVideoId(id);
+
+        //调用初始化对象里面的方法，传递request，获取数据
+        try {
+            response = client.getAcsResponse(request);
+            List<GetPlayInfoResponse.PlayInfo> playInfoList = response.getPlayInfoList();
+            //播放地址
+            for (GetPlayInfoResponse.PlayInfo playInfo : playInfoList) {
+                playInfoUrl = playInfo.getPlayURL();
+                System.out.print("PlayInfo.PlayURL = " + playInfo.getPlayURL() + "\n");
+            }
+        } catch (ClientException e) {
+            e.printStackTrace();
+        }
+
+        return R.ok().data("playInfo", playInfoUrl);
+
+    }
+
 
 }

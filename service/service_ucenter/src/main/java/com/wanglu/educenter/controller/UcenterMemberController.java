@@ -6,6 +6,7 @@ import com.wanglu.commonutils.R;
 import com.wanglu.educenter.entity.UcenterMember;
 import com.wanglu.educenter.entity.vo.RegisterVo;
 import com.wanglu.educenter.service.UcenterMemberService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,6 +56,15 @@ public class UcenterMemberController {
         //将返回的对象密码设置为空
         member.setPassword(null);
         return R.ok().data("userInfo", member);
+    }
+    //根据token字符串获取用户信息
+    @PostMapping("getInfoUc/{id}")
+    public R getInfo(@PathVariable String id) {
+        //根据用户id获取用户信息
+        UcenterMember ucenterMember = memberService.getById(id);
+        UcenterMember member = new UcenterMember();
+        BeanUtils.copyProperties(ucenterMember,member);
+        return R.ok().data("member",member);
     }
 }
 
