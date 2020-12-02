@@ -2,6 +2,8 @@ package com.wanglu.vod.controller;
 
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
+import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthRequest;
+import com.aliyuncs.vod.model.v20170321.GetVideoPlayAuthResponse;
 import com.wanglu.commonutils.R;
 import com.wanglu.servicebase.exceptionhandler.GuliException;
 import com.wanglu.vod.Utils.ConstantVodUtils;
@@ -56,6 +58,24 @@ public class VodController {
         vodService.removeMoreAlyVideo(videoIdList);
 
         return R.ok();
+    }
+
+    //根据视频id获取视频凭证
+    @GetMapping("getPlayAuth/{id}")
+    public R getPlayAuth(@PathVariable String id) {
+        try {
+            DefaultAcsClient client =
+                    InitVodClient.initVodClient(ConstantVodUtils.ACCESS_KEY_ID, ConstantVodUtils.ACCESS_KEY_SECRET);
+            GetVideoPlayAuthRequest request = new GetVideoPlayAuthRequest();
+            //向request里面设置视频id
+            request.setVideoId(id);
+            //调用方法获得凭证
+            GetVideoPlayAuthResponse response = client.getAcsResponse(request);
+            String playAuth = response.getPlayAuth();
+            return R.ok().data("playAuth", playAuth);
+        } catch (Exception e) {
+            throw new GuliException(20001, "获取凭证失败");
+        }
     }
 
 }
