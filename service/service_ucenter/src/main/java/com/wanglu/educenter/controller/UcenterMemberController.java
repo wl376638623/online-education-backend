@@ -3,6 +3,7 @@ package com.wanglu.educenter.controller;
 
 import com.wanglu.commonutils.JwtUtils;
 import com.wanglu.commonutils.R;
+import com.wanglu.commonutils.UcenterMemberOrder;
 import com.wanglu.educenter.entity.UcenterMember;
 import com.wanglu.educenter.entity.vo.RegisterVo;
 import com.wanglu.educenter.service.UcenterMemberService;
@@ -65,6 +66,16 @@ public class UcenterMemberController {
         UcenterMember member = new UcenterMember();
         BeanUtils.copyProperties(ucenterMember,member);
         return R.ok().data("member",member);
+    }
+
+    //根据用户id获取用户信息
+    @PostMapping("getUserInfoOrder/{id}")
+    public UcenterMemberOrder getUserInfoOrder(@PathVariable String id) {
+        UcenterMember member = memberService.getById(id);
+        //把member对象理念的值复制给UcenterMemberOrder
+        UcenterMemberOrder ucenterMemberOrder = new UcenterMemberOrder();
+        BeanUtils.copyProperties(member, ucenterMemberOrder);
+        return ucenterMemberOrder;
     }
 }
 

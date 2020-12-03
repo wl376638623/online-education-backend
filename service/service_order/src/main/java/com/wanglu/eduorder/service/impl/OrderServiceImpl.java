@@ -16,5 +16,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements OrderService {
+    //生成订单的方法
+    @Override
+    public String createOrders(String courseId, String memberIdByJwtToken) {
+        //通过远程调用根据用户id获取用户信息
 
+        //通过远程调用根据课程id获取用户信息
+
+        return null;
+    }
 }

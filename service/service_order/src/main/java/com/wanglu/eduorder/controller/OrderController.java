@@ -27,8 +27,8 @@ public class OrderController {
     //1.生成订单方法
     @PostMapping("createOrder/{courseId}")
     public R saveOrder(@PathVariable String courseId, HttpServletRequest request) {
-        orderService.createOrders(courseId, JwtUtils.getMemberIdByJwtToken(request));
-        return R.ok();
+        String orderNo = orderService.createOrders(courseId, JwtUtils.getMemberIdByJwtToken(request));
+        return R.ok().data("orderId",orderNo);
     }
 }
 
