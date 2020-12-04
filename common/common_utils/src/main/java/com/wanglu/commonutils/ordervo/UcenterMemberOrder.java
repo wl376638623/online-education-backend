@@ -1,4 +1,4 @@
-package com.wanglu.commonutils;
+package com.wanglu.commonutils.ordervo;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;

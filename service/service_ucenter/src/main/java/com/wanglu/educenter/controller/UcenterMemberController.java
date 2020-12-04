@@ -3,7 +3,7 @@ package com.wanglu.educenter.controller;
 
 import com.wanglu.commonutils.JwtUtils;
 import com.wanglu.commonutils.R;
-import com.wanglu.commonutils.UcenterMemberOrder;
+import com.wanglu.commonutils.ordervo.UcenterMemberOrder;
 import com.wanglu.educenter.entity.UcenterMember;
 import com.wanglu.educenter.entity.vo.RegisterVo;
 import com.wanglu.educenter.service.UcenterMemberService;
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.PublicKey;
 
 /**
  * <p>
