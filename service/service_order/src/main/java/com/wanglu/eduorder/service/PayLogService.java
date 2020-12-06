@@ -16,4 +16,11 @@ import java.util.Map;
 public interface PayLogService extends IService<PayLog> {
 
     Map createActive(String orderNo);
+
+    //根据订单号查询支付状态
+    Map<String, String> queryPayStatus(String orderNo);
+
+    void updateOrdersStatus(Map<String, String> map);
+    //向支付表中添加记录 更新订单状态
+    
 }
