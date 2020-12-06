@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Component
-@FeignClient("service-eud")
+@FeignClient("service-edu")
 public interface EduClient {
     //根据课程id查询课程信息
     @PostMapping("/eduservice/coursefront/getCourseInfoOrder/{id}")
