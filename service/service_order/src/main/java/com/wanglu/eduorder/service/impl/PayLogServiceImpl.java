@@ -8,6 +8,8 @@ import com.wanglu.eduorder.mapper.PayLogMapper;
 import com.wanglu.eduorder.service.OrderService;
 import com.wanglu.eduorder.service.PayLogService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wanglu.eduorder.utils.HttpClient;
+import com.wanglu.servicebase.exceptionhandler.GuliException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,10 +51,24 @@ public class PayLogServiceImpl extends ServiceImpl<PayLogMapper, PayLog> impleme
             m.put("notify_url", "http://guli.shop/api/order/weixinPay/weixinNotify\n");
             m.put("trade_type", "NATIVE");
             //3 发送httpclient轻汽油 传递参数xml格式
-
-            //4 得到发送请求信息
+            HttpClient client = new HttpClient("https://api.mch.weixin.qq.com/pay/unifiedorder");
+            client.setXmlParam(WXPayUtil.generateSignedXml(m,"T6m9iK73b0kn9g5v426MKfHQH7X8rKwb"));
+            client.setHttps(true);
+            //执行请求
+            client.post();
+            //4 得到发送请求信息返回
+            String content = client.getContent();
+            //把xml转化成map集合 把map集合返回
+            Map<String, String> resultMap = WXPayUtil.xmlToMap(content);
+            Map map = new HashMap<>();
+            map.put("out_trade_no", orderNo);
+            map.put("course_id", order.getCourseId());
+            map.put("total_fee", order.getTotalFee());
+            map.put("result_code", resultMap.get("result_code"));//返回二维码操作状态码
+            map.put("code_url", resultMap.get("code_url"));//二维码地主
+            return map;
         } catch (Exception e) {
+            throw new GuliException(20001, "生成二维码失败");
         }
-        return null;
     }
 }
