@@ -41,5 +41,18 @@ public class OrderController {
         Order order = orderService.getOne(wrapper);
         return R.ok().data("item", order);
     }
+    @GetMapping("isBuyCourse/{courseId}/{memberId}")
+    public boolean isBuyCourse(@PathVariable String courseId,@PathVariable String memberId) {
+        QueryWrapper<Order> wrapper = new QueryWrapper<>();
+        wrapper.eq("course_id",courseId);
+        wrapper.eq("member_id",memberId);
+        wrapper.eq("status",1);//支付状态 1代表已经支付
+        int count = orderService.count(wrapper);
+        if(count>0) { //已经支付
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
