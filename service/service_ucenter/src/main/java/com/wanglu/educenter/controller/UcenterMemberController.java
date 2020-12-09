@@ -57,14 +57,15 @@ public class UcenterMemberController {
         member.setPassword(null);
         return R.ok().data("userInfo", member);
     }
+
     //根据token字符串获取用户信息
     @PostMapping("getInfoUc/{id}")
     public R getInfo(@PathVariable String id) {
         //根据用户id获取用户信息
         UcenterMember ucenterMember = memberService.getById(id);
         UcenterMember member = new UcenterMember();
-        BeanUtils.copyProperties(ucenterMember,member);
-        return R.ok().data("member",member);
+        BeanUtils.copyProperties(ucenterMember, member);
+        return R.ok().data("member", member);
     }
 
     //根据用户id获取用户信息
@@ -75,6 +76,13 @@ public class UcenterMemberController {
         UcenterMemberOrder ucenterMemberOrder = new UcenterMemberOrder();
         BeanUtils.copyProperties(member, ucenterMemberOrder);
         return ucenterMemberOrder;
+    }
+
+    //查询某一天的注册人数
+    @GetMapping("countRegister/{day}")
+    public R countRegister(@PathVariable String day) {
+        Integer count = memberService.countRegisterDay(day);
+        return R.ok().data("countRegister", count);
     }
 }
 

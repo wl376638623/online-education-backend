@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface StatisticsDailyService extends IService<StatisticsDaily> {
 
+    void registerCount(String day);
 }
