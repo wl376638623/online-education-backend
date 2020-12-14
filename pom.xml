@@ -8,6 +8,7 @@
         <module>service_cms</module>
         <module>service/service_cmd</module>
         <module>service/service_acl</module>
+        <module>infrastructure</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
